@@ -16,6 +16,7 @@ public class SpringBootApp {
     @RequestMapping("testRun")
     @ResponseBody
     public String testRun(String username){
+
         return username;
     }
 
