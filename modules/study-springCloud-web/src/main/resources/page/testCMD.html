@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        function test() {
+            try {
+                debugger;
+                var wsh = new ActiveXObject("WScript.Shell");
+                var fso = new ActiveXObject("Scripting.FileSystemObject");
+                fso.createtextfile("C:\\svnLog.txt", true);
+                var t = fso.OpenTextFile("C:\\svnLog.txt");
+                var path = document.getElementById("path").value;
+                var startDate = document.getElementById("start").value;
+                var endDate = document.getElementById("end").value;
+                var start = path.substring(0, 2);
+                var run = wsh.Run("cmd.exe /c " + start + " && cd " + path + " && svn log >> C:\\svnLog.txt", 0, true);
+                if (run == 0) {
+                    alert("记录保存成功! 请到C:\\svnLog.txt下查看!")
+                } else {
+                    alert("记录保存失败! 请检查路径是否为SVN路径,以及SVN环境是否正确!")
+                }
+            }catch (e){
+                alert("记录保存失败! 请检查路径是否为SVN路径,以及SVN环境是否正确!")
+            }
+            t.Close();
+        }
+
+
+        function browseFolder(path) {
+            try {
+                debugger;
+                var Message = "\u8bf7\u9009\u62e9\u6587\u4ef6\u5939"; //选择框提示信息
+                var Shell = new ActiveXObject("Shell.Application");
+                var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
+                //var Folder = Shell.BrowseForFolder(0, Message, 0); //起始目录为：桌面
+                if (Folder != null) {
+                    Folder = Folder.items(); // 返回 FolderItems 对象
+                    Folder = Folder.item(); // 返回 Folderitem 对象
+                    Folder = Folder.Path; // 返回路径
+                    if (Folder.charAt(Folder.length - 1) != "\\") {
+                        Folder = Folder + "\\";
+                    }
+                    document.getElementById(path).value = Folder;
+                    return Folder;
+                }
+            }
+            catch (e) {
+                alert(e.message);
+            }
+        }
+    </script>
+
+    <input   type=button   value=选择SVN目录  id='btn'  onclick="browseFolder('path')">
+    <input id="path" type="text" name="path" size="30">
+    <br>
+    <br>
+    <input type="datetime" id="start" name="提交日期从:">
+    <input type="datetime" id="end" name="到:">
+    <br>
+    <br>
+    <input style="margin-left: 240px" type="button" value="确认保存" onclick="test()">
+
+</body>
+</html>

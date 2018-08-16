@@ -18,6 +18,16 @@ public class TestUrl {
             bufferedWriter.write(line);
             bufferedWriter.newLine();
         }
+
+        /*debugger;
+            var objShell
+            var objShell= new ActiveXObject("WScript.Shell")
+            var iReturnCode=objShell.Run("cmd /k start javac",0,true)
+            alert(iReturnCode);
+            //iReturnCode=objShell.Run("cmd.exe /c copy d:/!*.text mytest",0,true)*/
+
+
+
         bufferedWriter.flush();
         bufferedWriter.close();
         br.close();
