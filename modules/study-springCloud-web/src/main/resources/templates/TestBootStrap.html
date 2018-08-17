@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${context.getContextPath()}/css/style.css">
+    <script src="http://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="${context.getContextPath()}/js/vue/vue.js"></script>
+</head>
+<body>
+
+<!--<div v-on:click.prevent id="btngroup" style="margin-left: 20px;margin-top: 20px" class="btn-group">
+    <div v-on:click=makeActive("按钮1") class="btn btn-primary">按钮1</div>
+    <div v-on:click=makeActive("按钮2") class="btn btn-success">按钮2</div>
+    <div v-on:click=makeActive("按钮3") class="btn btn-info">按钮3</div>
+    <br>
+    <p>当前选择的是:{{select}}</p>
+</div>
+</body>
+<script type="text/javascript">
+
+    window.onload=function () {
+        var vue = new Vue({
+            el:'#btngroup',
+            data:{
+                select:'按钮1'
+            },
+            methods:{
+                makeActive:function(item){
+                    this.select = item;
+                }
+            }
+
+        });
+
+    }
+</script>-->
+<!--<script>
+    window.onload=function () {
+        var vue = new Vue({
+            el:"#main",
+            data:{
+                inp:'请输入',
+                status:false
+            },
+            methods:{
+                hide:function () {
+                    this.status = false;
+                },
+                toggle:function () {
+                    this.status = !this.status;
+                }
+
+            }
+
+        });
+
+    }
+    
+</script>-->
+
+<!--<div id="main">
+    <div v-if="status" style="margin-top: 10px;margin-left: 10px;width:400px" class="input-group">
+        <div class="input-group-addon" ></div>
+        <input v-model="inp" type="text" class="form-control" placeholder="请输入内容" >
+
+    </div>
+    <div  style="margin-top: 15px;margin-left: 150px"class="btn btn-default" type="button">
+        <div v-on:click="toggle()"  class="    glyphicon glyphicon-search">{{inp}}</div>
+    </div>
+
+</div>-->
+
+<div style="width:500px;margin-top: 20px;margin-left: 20px;" id="main">
+    <a href="#" v-on:click="change" class="list-group-item active">商品总金额:  {{total}}
+        <div></div>
+    </a>
+    <template v-if="ok">
+        <div v-for="food in foods">
+            <a href="#" v-bind:class="{'color':food.isClick}" class="list-group-item" v-on:click="UpdateTotal(food)">{{food.name}}
+                <span style="float:right"  class="label label-default">￥{{*food.price}}</span>
+            </a>
+        </div>
+    </template>
+</div>
+
+
+</body>
+
+
+</html>
