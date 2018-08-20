@@ -13,8 +13,6 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>modules/study-springCloud-test</module>
-        <module>modules/study-springCloud-boot</module>
         <module>modules/study-springCloud-web</module>
     </modules>
     <properties>
