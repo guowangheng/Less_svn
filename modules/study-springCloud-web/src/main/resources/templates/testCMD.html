@@ -3,67 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <![endif]-->
+    <style>
+        [class *= col-]{
+            background-color: #eee;
+            border: 1px solid #ccc;
+        }
+        [class *= col-] [class *= col-] {
+            background-color: #f36;
+            border:1px dashed #fff;
+            color: #fff;
+        }
+        .panel {
+            float: left;
+            width: 200px;
+            margin: 5px;
+        }
+        body{padding:50px 0 0 0;}
+
+        .scrollspy-example{
+            height:500px;
+            font-size:20px;
+            overflow:auto;
+            position:relative;
+        }
+
+        .navbar{
+            height: 6%;
+        }
+        body{
+            background: url(http://attimg.dospy.com/img/day_111119/20111119_29952d5a666b8bb6c465K9UEMEuk7ekK.jpg) no-repeat;
+            background-size: 1710px 900px;
+        }
+
+    </style>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script type="text/javascript">
-        function test() {
-            try {
-                debugger;
-                var wsh = new ActiveXObject("WScript.Shell");
-                var fso = new ActiveXObject("Scripting.FileSystemObject");
-                fso.createtextfile("C:\\svnLog.txt", true);
-                var t = fso.OpenTextFile("C:\\svnLog.txt");
-                var path = document.getElementById("path").value;
-                var startDate = document.getElementById("start").value;
-                var endDate = document.getElementById("end").value;
-                var start = path.substring(0, 2);
-                var run = wsh.Run("cmd.exe /c " + start + " && cd " + path + " && svn log >> C:\\svnLog.txt", 0, true);
-                if (run == 0) {
-                    alert("记录保存成功! 请到C:\\svnLog.txt下查看!")
-                } else {
+        <!--响应式导航条 collapse navbar-collapse-->
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation"><!--navbar-inverse则变为反色-->
+            <div class="navbar-header" style="margin-left: 7%;" >
+                　<!-- .navbar-toggle样式用于toggle收缩的内容，即nav-collapse collapse样式所在元素 -->
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!-- 确保无论是宽屏还是窄屏，navbar-brand都显示 -->
+                <a href="##" class="navbar-brand" >ExpoData</a>
+            </div>
+            <!-- 屏幕宽度小于768px时，div.navbar-responsive-collapse容器里的内容都会隐藏，显示icon-bar图标，当点击icon-bar图标时，再展开。屏幕大于768px时，默认显示。 -->
+            <div class="collapse navbar-collapse navbar-responsive-collapse">
+                <ul class="nav navbar-nav" style="margin-left: 40%">
+                    <li class="active"><a href="##">网站首页</a></li>
+                    <li><a href="##">功能介绍</a></li>
+                    <li><a href="##">使用说明</a></li>
+                    <li><a href="##">建议留言</a></li>
+                    <li><a href="##">关于我们</a></li>
+                </ul>
+                <form action="##" class="navbar-form navbar-left" rol="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="请输入关键词" />
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+            </div>
+        </div>
+
+        <div style="margin-left: 5%">
+            <ul id="myTab" class="nav nav-pills" style="color: gold;" role="tablist">
+                <li class="active" style="color: gold;"><a href="#bulletin" role="tab" data-toggle="pill">公告</a></li>
+                <li style="color: gold;"><a href="#rule" role="tab" data-toggle="pill">规则</a></li>
+            </ul>
+            <!-- 选项卡面板 -->
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane fade in active" id="bulletin">公告内容面板</div>
+                <div class="tab-pane fade" id="rule">规则内容面板</div>
+            </div>
+        </div>
+
+
+
+
+
+        <script type="text/javascript">
+            function test() {
+                try {
+                    debugger;
+                    var wsh = new ActiveXObject("WScript.Shell");
+                    var fso = new ActiveXObject("Scripting.FileSystemObject");
+                    fso.createtextfile("C:\\svnLog.txt", true);
+                    var t = fso.OpenTextFile("C:\\svnLog.txt");
+                    var path = document.getElementById("path").value;
+                    var startDate = document.getElementById("start").value;
+                    var endDate = document.getElementById("end").value;
+                    var start = path.substring(0, 2);
+                    var run = wsh.Run("cmd.exe /c " + start + " && cd " + path + " && svn log >> C:\\svnLog.txt", 0, true);
+                    if (run == 0) {
+                        alert("记录保存成功! 请到C:\\svnLog.txt下查看!")
+                    } else {
+                        alert("记录保存失败! 请检查路径是否为SVN路径,以及SVN环境是否正确!")
+                    }
+                }catch (e){
                     alert("记录保存失败! 请检查路径是否为SVN路径,以及SVN环境是否正确!")
                 }
-            }catch (e){
-                alert("记录保存失败! 请检查路径是否为SVN路径,以及SVN环境是否正确!")
+                t.Close();
             }
-            t.Close();
-        }
 
 
-        function browseFolder(path) {
-            try {
-                debugger;
-                var Message = "\u8bf7\u9009\u62e9\u6587\u4ef6\u5939"; //选择框提示信息
-                var Shell = new ActiveXObject("Shell.Application");
-                var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
-                //var Folder = Shell.BrowseForFolder(0, Message, 0); //起始目录为：桌面
-                if (Folder != null) {
-                    Folder = Folder.items(); // 返回 FolderItems 对象
-                    Folder = Folder.item(); // 返回 Folderitem 对象
-                    Folder = Folder.Path; // 返回路径
-                    if (Folder.charAt(Folder.length - 1) != "\\") {
-                        Folder = Folder + "\\";
+            function browseFolder(path) {
+                try {
+                    debugger;
+                    var Message = "\u8bf7\u9009\u62e9\u6587\u4ef6\u5939"; //选择框提示信息
+                    var Shell = new ActiveXObject("Shell.Application");
+                    var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
+                    //var Folder = Shell.BrowseForFolder(0, Message, 0); //起始目录为：桌面
+                    if (Folder != null) {
+                        Folder = Folder.items(); // 返回 FolderItems 对象
+                        Folder = Folder.item(); // 返回 Folderitem 对象
+                        Folder = Folder.Path; // 返回路径
+                        if (Folder.charAt(Folder.length - 1) != "\\") {
+                            Folder = Folder + "\\";
+                        }
+                        document.getElementById(path).value = Folder;
+                        return Folder;
                     }
-                    document.getElementById(path).value = Folder;
-                    return Folder;
+                }
+                catch (e) {
+                    alert(e.message);
                 }
             }
-            catch (e) {
-                alert(e.message);
-            }
-        }
-    </script>
+        </script>
 
-    <input   type=button   value=选择SVN目录  id='btn'  onclick="browseFolder('path')">
-    <input id="path" type="text" name="path" size="30">
-    <br>
-    <br>
-    <input type="datetime" id="start" name="提交日期从:">
-    <input type="datetime" id="end" name="到:">
-    <br>
-    <br>
-    <input style="margin-left: 240px" type="button" value="确认保存" onclick="test()">
-
+        <input   type=button   value=选择SVN目录  id='btn'  onclick="browseFolder('path')">
+        <input id="path" type="text" name="path" size="30">
+        <br>
+        <br>
+        <input type="datetime" id="start" name="提交日期从:">
+        <input type="datetime" id="end" name="到:">
+        <br>
+        <br>
+        <input style="margin-left: 240px" type="button" value="确认保存" onclick="test()">
 </body>
+<script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </html>
