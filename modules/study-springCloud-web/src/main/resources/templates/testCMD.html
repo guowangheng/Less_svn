@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <title>ExpoData</title>
+    <link rel="stylesheet" media="screen" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -37,7 +38,7 @@
             height: 6%;
         }
         body{
-            background: url(http://attimg.dospy.com/img/day_111119/20111119_29952d5a666b8bb6c465K9UEMEuk7ekK.jpg) no-repeat;
+            background: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534911287582&di=2f77ae22b4b90271e52fbeb9486634e3&imgtype=0&src=http%3A%2F%2Fp15.qhimg.com%2Fbdr%2F__%2Ft015dfb031fd9c9eb6c.jpg) no-repeat;
             background-size: 1710px 900px;
         }
 
@@ -75,81 +76,367 @@
             </div>
         </div>
 
-        <div style="margin-left: 5%">
-            <ul id="myTab" class="nav nav-pills" style="color: gold;" role="tablist">
-                <li class="active" style="color: gold;"><a href="#bulletin" role="tab" data-toggle="pill">公告</a></li>
-                <li style="color: gold;"><a href="#rule" role="tab" data-toggle="pill">规则</a></li>
+        <div style="margin-left: 40%; margin-top: 3%">
+            <ul id="myTab2" class="nav nav-tabs" role="tablist">
+                <li class="active"><a href="#svnPanel" role="tab" data-toggle="tab"> <font size="4px" style="font-weight: bold" color="#191970">SVN Export</font></a></li>
+                <li><a href="#gitPanel" role="tab" data-toggle="tab"><font size="4px" style="font-weight: bold"  color="#191970">GIT Export</font></a></li>
             </ul>
             <!-- 选项卡面板 -->
-            <div id="myTabContent" class="tab-content">
-                <div class="tab-pane fade in active" id="bulletin">公告内容面板</div>
-                <div class="tab-pane fade" id="rule">规则内容面板</div>
+            <div id="myTabContent2" class="tab-content">
+                <div class="tab-pane fade in active" id="svnPanel">
+                    <!--svn导出-->
+                    <div>
+                        <form role="form" style="width: 30%; margin-top: 3%; font-size: 17px">
+                            <div class="form-group">
+                                <label>选择SVN目录：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary"  onclick="browseFolder('location',event, this)">选择...</button></label>
+                                <input type="text" value="" class="form-control" readonly id="location" placeholder="svn路径...">
+                                <span class="help-block" style="display: none;" name="loc">请选择SVN目录</span>
+                                <span class="glyphicon glyphicon-warning-sign form-control-feedback" style="display: none" name="loc"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>选择保存目录：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary"  onclick="browseFolder('savePath',event, this)">选择...</button></label>
+                                <input type="text" value="" class="form-control" readonly id="savePath" placeholder="保存路径...">
+                                <span class="help-block" style="display: none;" name="saveP">请选择保存目录</span>
+                                <span class="glyphicon glyphicon-warning-sign form-control-feedback" style="display: none" name="saveP"></span>
+                            </div>
+                            <div class="form-group">
+                                <!--<label for="datetimeStart">提交时间从：</label>
+                                &lt;!&ndash;<input size="16" type="text"  readonly class="form_datetime">&ndash;&gt;
+
+                                <input size="16" type="text" class="form-control input-append date form_datetime" id="datetimeStart" value="" readonly>
+                                <span class="add-on"><i class="icon-remove"></i></span>
+                                <span class="add-on"><i class="icon-th"></i></span>-->
+
+                                <label>选择开始时间：</label>
+                                <!--指定 date标记-->
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input type='text' class="form-control" placeholder="开始时间..." id="startDate"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+                            <div class="form-group">
+                                <label>选择结束时间：</label>
+                                <!--指定 date标记-->
+                                <div class='input-group date' id='datetimepicker2'>
+                                    <input type='text' class="form-control" placeholder="结束时间..." id="endDate"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="keyword">关键字搜索：</label>
+                                <input type="text" class="form-control" id="keyword" placeholder="关键字...">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" value="1" id="detail"> 导出文件修改明细
+                                </label>
+                            </div>
+                            <button  class="btn btn-default" onclick="test(event)">确认导出</button>
+                        </form>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="gitPanel">
+                    <!--git导出-->
+                    <div>
+                        <div>
+                            <form role="form" style="width: 30%; margin-top: 3%; font-size: 17px">
+                                <div class="form-group">
+                                    <label>选择SVN目录：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary"  onclick="browseFolder('location',event)">选择...</button></label>
+                                    <input type="text" value="" class="form-control" readonly id="location222" placeholder="svn路径...">
+                                </div>
+                                <div class="form-group">
+                                    <label>选择保存目录：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary"  onclick="browseFolder('savePath',event)">选择...</button></label>
+                                    <input type="text" value="" class="form-control" readonly id="savePath222" placeholder="保存路径...">
+                                </div>
+                                <div class="form-group">
+                                    <!--<label for="datetimeStart">提交时间从：</label>
+                                    &lt;!&ndash;<input size="16" type="text"  readonly class="form_datetime">&ndash;&gt;
+
+                                    <input size="16" type="text" class="form-control input-append date form_datetime" id="datetimeStart" value="" readonly>
+                                    <span class="add-on"><i class="icon-remove"></i></span>
+                                    <span class="add-on"><i class="icon-th"></i></span>-->
+
+                                    <label>选择开始时间：</label>
+                                    <!--指定 date标记-->
+                                    <div class='input-group date' id='datetimepicker222'>
+                                        <input type='text' class="form-control" placeholder="开始时间..."/>
+                                        <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>选择结束时间：</label>
+                                    <!--指定 date标记-->
+                                    <div class='input-group date' id='datetimepicker333'>
+                                        <input type='text' class="form-control" placeholder="结束时间..."/>
+                                        <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="keyword">关键字搜索：</label>
+                                    <input type="text" class="form-control" id="keyword222" placeholder="关键字...">
+                                </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" value="1"> 导出文件修改明细
+                                    </label>
+                                </div>
+                                <button class="btn btn-default" id="export"  onclick="test()">确认导出</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
         </div>
 
+        <div class="modal" id="mymodal2" tabindex="-1">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="tittle"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="errorTxt"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div>
+
+        <div class="modal fade" style="margin-top: 15%" id="mymodal" data-keyboard="false" data-backdrop="static" tabindex="-1" >
+            <div class="modal-dialog modal-sm">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">文件写入中....</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="progress progress-striped active" aria-hidden="true">
+                            <div class="progress-bar progress-bar-success" id="process" style="width:0%"></div>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
 
 
+            </div>
+            <!-- /.modal -->
+        </div>
 
-
-        <script type="text/javascript">
-            function test() {
-                try {
-                    debugger;
-                    var wsh = new ActiveXObject("WScript.Shell");
-                    var fso = new ActiveXObject("Scripting.FileSystemObject");
-                    fso.createtextfile("C:\\svnLog.txt", true);
-                    var t = fso.OpenTextFile("C:\\svnLog.txt");
-                    var path = document.getElementById("path").value;
-                    var startDate = document.getElementById("start").value;
-                    var endDate = document.getElementById("end").value;
-                    var start = path.substring(0, 2);
-                    var run = wsh.Run("cmd.exe /c " + start + " && cd " + path + " && svn log >> C:\\svnLog.txt", 0, true);
-                    if (run == 0) {
-                        alert("记录保存成功! 请到C:\\svnLog.txt下查看!")
-                    } else {
-                        alert("记录保存失败! 请检查路径是否为SVN路径,以及SVN环境是否正确!")
-                    }
-                }catch (e){
-                    alert("记录保存失败! 请检查路径是否为SVN路径,以及SVN环境是否正确!")
-                }
-                t.Close();
-            }
-
-
-            function browseFolder(path) {
-                try {
-                    debugger;
-                    var Message = "\u8bf7\u9009\u62e9\u6587\u4ef6\u5939"; //选择框提示信息
-                    var Shell = new ActiveXObject("Shell.Application");
-                    var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
-                    //var Folder = Shell.BrowseForFolder(0, Message, 0); //起始目录为：桌面
-                    if (Folder != null) {
-                        Folder = Folder.items(); // 返回 FolderItems 对象
-                        Folder = Folder.item(); // 返回 Folderitem 对象
-                        Folder = Folder.Path; // 返回路径
-                        if (Folder.charAt(Folder.length - 1) != "\\") {
-                            Folder = Folder + "\\";
-                        }
-                        document.getElementById(path).value = Folder;
-                        return Folder;
-                    }
-                }
-                catch (e) {
-                    alert(e.message);
-                }
-            }
-        </script>
-
-        <input   type=button   value=选择SVN目录  id='btn'  onclick="browseFolder('path')">
-        <input id="path" type="text" name="path" size="30">
-        <br>
-        <br>
-        <input type="datetime" id="start" name="提交日期从:">
-        <input type="datetime" id="end" name="到:">
-        <br>
-        <br>
-        <input style="margin-left: 240px" type="button" value="确认保存" onclick="test()">
 </body>
 <script src="https://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.18.1/moment-with-locales.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        var picker1 = $('#datetimepicker1').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: moment.locale('zh-cn'),
+            //minDate: '2016-7-1'
+        });
+        var picker2 = $('#datetimepicker2').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: moment.locale('zh-cn')
+        });
+        //动态设置最小值
+        picker1.on('dp.change', function (e) {
+            picker2.data('DateTimePicker').minDate(e.date);
+        });
+        //动态设置最大值
+        picker2.on('dp.change', function (e) {
+            picker1.data('DateTimePicker').maxDate(e.date);
+        });
+    });
+
+    "cmd.exe /c G: && cd G:\\06 发布记录\\5.17交付物\\ && svn log -r {2018-04-11}:{2018-08-22} --search qiang >> C:\\\\svnLog.txt"
+</script>
+<script type="text/javascript">
+
+    var interval = 0;
+
+    function expose() {
+        debugger;
+        //涨百分之五
+        var proc = $('#process').css('width');
+        if (interval != -1){
+            if (proc.indexOf("%") != -1){
+                now = Number(proc.replace("%",''));
+                now = now + 10;
+                if (now > 100){
+                    now = "95%";
+                }else {
+                    now = now + "%";
+                }
+            }else{
+                var now = proc.replace("px",'');
+                if (now == 0){
+                    now = 268 * 0.05;
+                }else{
+                    now = now * 1.1;
+                }
+                if (now > 244){
+                    //now = "98%";
+                }else{
+                    now = now + "px";
+                }
+            }
+            $('#process').css('width',now);
+        }else{
+            $('#process').css('width',"100%");
+        }
+        setTimeout(function(){expose();},300);
+    }
+
+    function test(event) {
+        try {
+            debugger;
+            event.preventDefault();
+            var savePath = $("#savePath").val();
+            if (!savePath){
+                $("#savePath").parent("div").addClass("has-error has-feedback");
+                $("[name='saveP']")[0].style.display = "block";
+                return;
+            }
+            var pathLoc = $("#location").val();
+            if (!pathLoc){
+                $("#location").parent("div").addClass("has-error has-feedback");
+                $("[name='loc']")[0].style.display = "block";
+                return;
+            }
+            $('#process').css('width',"0%");
+            interval = 0;
+            $("#mymodal").modal();
+
+            $.ajax({
+                url:"#",
+                async: true,
+                dataType:"json",
+                error:function(data){
+                    expose();
+                }
+            });
+            var wsh = new ActiveXObject("WScript.Shell");
+            var fso = new ActiveXObject("Scripting.FileSystemObject");
+            var saveFile = savePath+"\\svnLog.txt";
+            fso.createtextfile(saveFile, true);
+            var t = fso.OpenTextFile(saveFile);
+            var start = pathLoc.substring(0, 2);
+            //var cmdStr = "cmd.exe /c " + start + " && cd " + pathLoc + " && svn log -r {"+startDate+"}:{"+endDate+"} -v >> C:\\svnLog.txt";
+            var cmdStr = "cmd.exe /c " + start + " && cd " + pathLoc + " && svn log";
+
+            var startDate = $("#startDate").val();
+            var endDate = $("#endDate").val();
+            if (!startDate && endDate){
+                startDate = endDate;
+            }else if(startDate && !endDate){
+                endDate = getNowFormatDate();
+            }
+            if (startDate && endDate){
+                var date = " -r {"+startDate+"}:{"+endDate+"}";
+                cmdStr = cmdStr + date;
+            }
+
+            var keyword = $('#keyword').val();
+            if (keyword){
+                var search = " --search "+keyword;
+                cmdStr = cmdStr + search;
+            }
+
+            var checkbox = $('#detail').prop('checked');
+            if (checkbox){
+                cmdStr = cmdStr + " -v";
+            }
+            cmdStr = cmdStr + " >> "+ saveFile;
+            var run = wsh.Run(cmdStr, 0, true);
+            if (run == 0) {
+                interval = 1;
+                $('#process').css('width',"100%");
+                setTimeout(function(){success(saveFile);},1000);
+            } else {
+                //$("#mymodal").modal("toggle");
+                $('#errorTxt').text("记录保存失败! 请检查路径是否为SVN路径,以及SVN环境是否正确!");
+                $('#tittle').text("错误提示");
+                interval = 1;
+                //$("#mymodal2").modal();
+            }
+        }catch (e){
+            //$("#mymodal").modal("toggle");
+            $('#errorTxt').text("记录保存失败! 请检查路径是否为SVN路径,以及SVN环境是否正确!");
+            $('#tittle').text("错误提示");
+            interval = 1;
+            //$("#mymodal2").modal();
+        }
+        t.Close();
+    }
+    
+    function success(saveFile) {
+
+        debugger;
+        $("#mymodal").modal("toggle");
+        $('#errorTxt').text("记录保存成功! 请到"+saveFile+"下查看!");
+        $('#tittle').text("成功提示");
+        $("#mymodal2").modal();
+        
+    }
+
+    function getNowFormatDate() {
+        //获取当前日期
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
+
+    function browseFolder(path,event,obj) {
+        try {
+            debugger;
+            event.preventDefault();
+            var aaa = $(obj).parent().next('input').html();
+            alert(aaa);
+            var Message = "\u8bf7\u9009\u62e9\u6587\u4ef6\u5939"; //选择框提示信息
+            var Shell = new ActiveXObject("Shell.Application");
+            var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
+            //var Folder = Shell.BrowseForFolder(0, Message, 0); //起始目录为：桌面
+            if (Folder != null) {
+                Folder = Folder.items(); // 返回 FolderItems 对象
+                Folder = Folder.item(); // 返回 Folderitem 对象
+                Folder = Folder.Path; // 返回路径
+                if (Folder.charAt(Folder.length - 1) != "\\") {
+                    Folder = Folder + "\\";
+                }
+                document.getElementById(path).value = Folder;
+                return Folder;
+            }
+        }
+        catch (e) {
+            alert(e.message);
+        }
+    }
+</script>
 </html>
