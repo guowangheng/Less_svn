@@ -39,7 +39,7 @@
         }
         body{
             background: url(https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1534911287582&di=2f77ae22b4b90271e52fbeb9486634e3&imgtype=0&src=http%3A%2F%2Fp15.qhimg.com%2Fbdr%2F__%2Ft015dfb031fd9c9eb6c.jpg) no-repeat;
-            background-size: 1710px 900px;
+            background-size: auto auto;
         }
 
     </style>
@@ -90,14 +90,10 @@
                             <div class="form-group">
                                 <label>选择SVN目录：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary"  onclick="browseFolder('location',event, this)">选择...</button></label>
                                 <input type="text" value="" class="form-control" readonly id="location" placeholder="svn路径...">
-                                <span class="help-block" style="display: none;" name="loc">请选择SVN目录</span>
-                                <span class="glyphicon glyphicon-warning-sign form-control-feedback" style="display: none" name="loc"></span>
                             </div>
                             <div class="form-group">
                                 <label>选择保存目录：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-primary"  onclick="browseFolder('savePath',event, this)">选择...</button></label>
                                 <input type="text" value="" class="form-control" readonly id="savePath" placeholder="保存路径...">
-                                <span class="help-block" style="display: none;" name="saveP">请选择保存目录</span>
-                                <span class="glyphicon glyphicon-warning-sign form-control-feedback" style="display: none" name="saveP"></span>
                             </div>
                             <div class="form-group">
                                 <!--<label for="datetimeStart">提交时间从：</label>
@@ -308,17 +304,7 @@
             debugger;
             event.preventDefault();
             var savePath = $("#savePath").val();
-            if (!savePath){
-                $("#savePath").parent("div").addClass("has-error has-feedback");
-                $("[name='saveP']")[0].style.display = "block";
-                return;
-            }
             var pathLoc = $("#location").val();
-            if (!pathLoc){
-                $("#location").parent("div").addClass("has-error has-feedback");
-                $("[name='loc']")[0].style.display = "block";
-                return;
-            }
             $('#process').css('width',"0%");
             interval = 0;
             $("#mymodal").modal();
@@ -417,8 +403,6 @@
         try {
             debugger;
             event.preventDefault();
-            var aaa = $(obj).parent().next('input').html();
-            alert(aaa);
             var Message = "\u8bf7\u9009\u62e9\u6587\u4ef6\u5939"; //选择框提示信息
             var Shell = new ActiveXObject("Shell.Application");
             var Folder = Shell.BrowseForFolder(0, Message, 64, 17); //起始目录为：我的电脑
